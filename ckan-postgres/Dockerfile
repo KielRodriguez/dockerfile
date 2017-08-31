@@ -14,6 +14,8 @@ RUN \
    libxslt1-dev \
    libgeos-c1
 
+# Configuracion personalizada
+COPY config/postgresql.conf /var/lib/postgresql/data/
 # Rutina para iniciar tablas geospaciales
 ADD init_geospatial.sh /docker-entrypoint-initdb.d/postgis.sh
 # Rutina para habilitar el datastore
