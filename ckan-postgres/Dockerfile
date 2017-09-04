@@ -6,6 +6,9 @@
 FROM postgres:9.3
 MAINTAINER 	Francisco Vaquero <francisco@opi.la>
 
+# Configuracion personalizada
+COPY config/postgresql.conf /postgresql.conf
+
 # Se instalan las dependencias para tener postgis en postgres
 RUN \
   apt-get update && \
@@ -15,8 +18,9 @@ RUN \
    libxslt1-dev \
    libgeos-c1
 
-# Configuracion personalizada
-COPY config/postgresql.conf /var/lib/postgresql/data/
+
+# Set config
+COPY set-config.sh /docker-entrypoint-initdb.d/set-config.sh
 # Rutina para iniciar tablas geospaciales
 ADD init_geospatial.sh /docker-entrypoint-initdb.d/postgis.sh
 # Rutina para habilitar el datastore
